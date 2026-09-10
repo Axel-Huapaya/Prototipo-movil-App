@@ -1,56 +1,64 @@
-# Welcome to your Expo app 👋
+# Prototipo Móvil — App de Domino's (React Native + Expo Router)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Prototipo funcional de interfaz móvil con 3 pantallas interactivas — **Login → Menú → Pedido** (con Detalle de producto).
 
-## Get started
+## Descripción
 
-1. Install dependencies
+Aplicación móvil que simula el flujo de pedido de una pizzería: inicio de sesión, catálogo de productos por categorías y resumen de pedido con cálculo de subtotal, envío y total. Es un prototipo de **UI/UX**: no requiere base de datos, backend ni autenticación real.
 
-   ```bash
-   npm install
-   ```
+## Tecnologías
 
-2. Start the app
+- [Expo](https://expo.dev/) (SDK 57)
+- [Expo Router](https://docs.expo.dev/router/introduction/) — navegación basada en archivos
+- React Native + TypeScript
+- Context API (estado del carrito en memoria)
 
-   ```bash
-   npx expo start
-   ```
+## Requisitos
 
-In the output, you'll find options to open the app in a
+- Node.js LTS instalado
+- App **Expo Go** en tu celular (Android/iOS), o un emulador
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Instalación
 
 ```bash
-npm run reset-project
+npm install
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Escanea el QR con Expo Go (Android) o la cámara (iOS) para probarlo en tu dispositivo.
 
-### Other setup steps
+## Estructura del proyecto
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+```
+src/
+├── app/
+│   ├── _layout.tsx          -> Stack Navigator raíz + CartProvider
+│   ├── index.tsx            -> Pantalla 1: Login
+│   ├── principal.tsx        -> Pantalla 2: Menú (categorías + productos)
+│   ├── detalle.tsx          -> Pantalla 3: Detalle del producto
+│   └── pedido.tsx           -> Pantalla 4: Resumen y confirmación de pedido
+├── components/
+│   └── StepIndicator.tsx    -> Barra "1. Login / 2. Menú / 3. Pedido"
+├── constants/
+│   ├── theme.ts             -> Colores, spacing y radios compartidos
+│   └── menu.ts              -> Catálogo de productos (mock) + categorías
+├── hooks/
+│   └── useCart.ts           -> Contexto y hook del carrito (estado en memoria)
+├── declarations.d.ts        -> Tipado de módulos CSS para TypeScript
+└── global.css               -> Estilos globales
+```
 
-## Learn more
+## Flujo de navegación
 
-To learn more about developing your project with Expo, look at the following resources:
+1. **Login** (`index.tsx`) — formulario de correo y contraseña; "Iniciar sesión" navega al menú.
+2. **Menú** (`principal.tsx`) — pestañas de categorías (Pizzas, Entradas, Bebidas, Postres), lista de productos con selector de cantidad (+/−); tocar un producto abre su **Detalle**.
+3. **Detalle** (`detalle.tsx`) — información completa del producto seleccionado, con control de cantidad.
+4. **Pedido** (`pedido.tsx`) — resumen del carrito: subtotal, costo de envío (S/ 5.00) y total, con botón "Confirmar pedido".
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+La barra de pasos superior (`StepIndicator`) permite saltar directamente entre Login, Menú y Pedido.
 
-## Join the community
+## Notas
 
-Join our community of developers creating universal apps.
+- No se requiere backend, API ni autenticación real: todo el estado del pedido vive en memoria (`useCart.ts`) mientras la app está abierta.
+- Los datos del catálogo son de ejemplo (`constants/menu.ts`).
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

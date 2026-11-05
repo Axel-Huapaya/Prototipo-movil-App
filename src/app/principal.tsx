@@ -1,12 +1,12 @@
-import React, { useState, useMemo } from 'react';
-import { View, Text, Pressable, StyleSheet, FlatList } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
 import StepIndicator from '@/components/StepIndicator';
-import { COLORS, RADIUS, SPACING } from '@/constants/theme';
 import { CATEGORIES, PRODUCTS, Product } from '@/constants/menu';
+import { COLORS, RADIUS, SPACING } from '@/constants/theme';
 import { useCart } from '@/hooks/useCart';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { useMemo, useState } from 'react';
+import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function PrincipalScreen() {
   const router = useRouter();
@@ -41,7 +41,9 @@ export default function PrincipalScreen() {
             <Ionicons name="arrow-back" size={20} color={COLORS.text} />
           </Pressable>
           <Text style={styles.headerTitle}>Menú Domino's</Text>
-          <View style={{ width: 20 }} />
+          <Pressable onPress={() => router.push('/camera')} hitSlop={8}>
+            <Ionicons name="camera-outline" size={20} color={COLORS.text} />
+          </Pressable>
         </View>
 
         <View style={styles.tabsRow}>
